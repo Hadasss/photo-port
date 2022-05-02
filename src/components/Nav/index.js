@@ -6,7 +6,6 @@ function Nav(props) {
 
   // the first argument is the callback function, and the second argument is an array with a single element, currentCategory. The second argument directs the hook to re-render the component on changes to the value of this state.
   // if currentCategory changes now, the component will re-render so that the change in document.title will be visible to the user.
-
   useEffect(() => {
     document.title = capitalizeFirstLetter(currentCategory.name);
   }, [currentCategory]);
