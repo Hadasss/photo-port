@@ -5,6 +5,7 @@ import Gallery from "./components/Gallery/index";
 import ContactForm from "./components/Contact";
 
 function App() {
+  const [contactSelected, setContactSelected] = useState(false);
   const [categories] = useState([
     {
       name: "commercial",
@@ -23,16 +24,24 @@ function App() {
 
   return (
     <div>
-      <ContactForm></ContactForm>
-      {/* New props also cause components to re-render. So even though the setter in App.js doesn’t cause its children to re-render, the fact that its prop changed does. */}
       <Nav
         categories={categories}
         setCurrentCategory={setCurrentCategory}
         currentCategory={currentCategory}
+        // Passing the getter and setter functions into the Nav component will allow this component to modify the state in the App component, which will conditionally render based on the user's selection.
+        contactSelected={contactSelected}
+        setContactSelected={setContactSelected}
       ></Nav>
       <main>
-        <Gallery currentCategory={currentCategory}></Gallery>
-        <About></About>
+        {/* ternary operator: */}
+        {!contactSelected ? (
+          <>
+            <Gallery currentCategory={currentCategory}></Gallery>
+            <About></About>
+          </>
+        ) : (
+          <ContactForm></ContactForm>
+        )}
       </main>
     </div>
   );

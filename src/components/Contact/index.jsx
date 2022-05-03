@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { validateEmail } from "../../utils/helpers";
 
 function ContactForm() {
+  const [errorMessage, setErrorMessage] = useState("");
   const [formState, setFormState] = useState({
     name: "",
     email: "",
@@ -9,9 +11,27 @@ function ContactForm() {
   const { name, email, message } = formState;
 
   function handleChange(e) {
+    if (e.target.name === "email") {
+      const isValid = validateEmail(e.target.value);
+      console.log(isValid);
+      // isValid conditional statement
+      if (!isValid) {
+        setErrorMessage("Your email is invalid");
+      } else {
+        setErrorMessage("");
+      }
+    } else {
+      if (!e.target.value.length) {
+        setErrorMessage(`${e.target.name} is required`);
+      } else {
+        setErrorMessage("");
+      }
+    }
     // we're using the setFormState function to update the formState value for the name property. We assign the value taken from the input field in the UI with e.target.value and assign this value to the property formState.name.
     // We use the spread operator, ...formState, so we can retain the other key-value pairs in this object. Without the spread operator, the formState object would be overwritten to only contain the name: value key pair.
-    setFormState({ ...formState, [e.target.name]: e.target.value });
+    if (!errorMessage) {
+      setFormState({ ...formState, [e.target.name]: e.target.value });
+    }
     // The name property of target in the preceding expression refers to the name attribute of the form element. This attribute value matches the property names of formState (name, email, and message) and allows us to use [ ] to create dynamic property names.
   }
 
@@ -30,7 +50,7 @@ function ContactForm() {
             type="text"
             name="name"
             defaultValue={name}
-            onChange={handleChange}
+            onBlur={handleChange}
           />
         </div>
         <div>
@@ -39,7 +59,7 @@ function ContactForm() {
             type="email"
             name="email"
             defaultValue={email}
-            onChange={handleChange}
+            onBlur={handleChange}
           />
         </div>
         <div>
@@ -49,9 +69,15 @@ function ContactForm() {
             name="message"
             rows="5"
             defaultValue={message}
-            onChange={handleChange}
+            onBlur={handleChange}
           />
         </div>
+
+        {errorMessage && (
+          <div>
+            <p className="error-text">{errorMessage}</p>
+          </div>
+        )}
 
         <button type="submit">Submit</button>
       </form>
