@@ -123,19 +123,19 @@ const PhotoList = ({ category }) => {
   return (
     <div>
       <div className="flex-row">
-        {currentPhotos.map((image, i) => {
+        {currentPhotos.map((image, i) => (
           <img
             // src was assigned the require expression. We were also able to take advantage of the incremental naming of the images by using i.
             src={
               // The default property is where the image has been saved. To render the image, the default property must be invoked.
-              require(`../../assets/small/${category}/${i}.jpg`).default
+              require(`../../assets/small/${category}/${i}.jpg`)
             }
             alt={image.name}
             className="img-thumbnail mx-1"
             // The key attribute was also assigned the image's name. This attribute value must be a unique string. The absence of this unique key value will cause an error message.
             key={image.name}
-          />;
-        })}
+          />
+        ))}
       </div>
     </div>
   );

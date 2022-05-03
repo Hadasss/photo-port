@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import About from "./components/About/index";
 import Nav from "./components/Nav/index";
 import Gallery from "./components/Gallery/index";
+import ContactForm from "./components/Contact";
 
 function App() {
   const [categories] = useState([
@@ -22,6 +23,7 @@ function App() {
 
   return (
     <div>
+      <ContactForm></ContactForm>
       {/* New props also cause components to re-render. So even though the setter in App.js doesn’t cause its children to re-render, the fact that its prop changed does. */}
       <Nav
         categories={categories}
