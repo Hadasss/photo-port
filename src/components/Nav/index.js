@@ -10,6 +10,14 @@ function Nav(props) {
     setContactSelected,
   } = props;
 
+  const categories = [
+    { name: "portraits", description: "Portraits of people in my life" },
+  ];
+  const mockCurrentCategory = jest.fn();
+  const mockSetCurrentCategory = jest.fn();
+  const mockContactSelected = jest.fn();
+  const mockSetContactSelected = jest.fn();
+
   // the first argument is the callback function, and the second argument is an array with a single element, currentCategory. The second argument directs the hook to re-render the component on changes to the value of this state.
   // if currentCategory changes now, the component will re-render so that the change in document.title will be visible to the user.
   useEffect(() => {
